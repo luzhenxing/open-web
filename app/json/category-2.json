@@ -1,0 +1,19 @@
+{
+  "error_code": 0,
+  "status": "ok",
+  "data": {
+    "list": [{
+      "name": "社会与人文1",
+      "value": 1
+    }, {
+      "name": "社会与人文2",
+      "value": 2
+    }, {
+      "name": "社会与人文3",
+      "value": 3
+    }, {
+      "name": "社会与人文4",
+      "value": 4
+    }]
+  }
+}

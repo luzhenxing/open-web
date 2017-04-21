@@ -1,1 +1,1 @@
-console.log('\'Allo \'Allo!');
+requirejs(['scripts/create']);
