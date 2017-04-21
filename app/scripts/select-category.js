@@ -1,22 +1,20 @@
-define(['scripts/ajax'], (ajax) => {
+// 行业分类联动
+define(['scripts/fetch'], (fetch) => {
   const $cate1 = $('#category1'),
-    $cate2 = $('#category2'),
-    url1 = 'json/category-1.json',
-    url2 = 'json/category-2.json';
+    $cate2 = $('#category2')
 
-  const renderCategory = ($cate, url, data) => {
-    return ajax.getData(url, data).then(data => {
-      $cate.html(template('tpl-select-option', data));
-    });
+  const renderCategory = ($cate, fetch_type, key) => {
+    return fetch[fetch_type](key).then(data => {
+      $cate.html(template('tpl-select-option', data))
+    })
   }
 
-  $cate1.on('change', function() {
-    var key = this.value;
-    renderCategory($cate2, url2, {key});
-  });
+  $cate1.on('change', function () {
+    var key = this.value
+    renderCategory($cate2, 'getCate2', key)
+  })
 
-  renderCategory($cate1, url1, {}).then(()=>{
-    renderCategory($cate2, url2, {key: $cate1.val()});
-  });
-
-});
+  renderCategory($cate1, 'getCate1').then(() => {
+    renderCategory($cate2, 'getCate2', $cate1.val())
+  })
+})

@@ -10,13 +10,14 @@ textarea
   cursor: default
 
 .navbar
-  border-bottom: 0
+  border: 0
   height: 50px
   line-height: 50px
   background-color: #565656
   border-radius: 0
   box-shadow: 0 0 1px rgba(0, 0, 0, .4)
   color: #fff
+  overflow: hidden
   a
     color: #fff
     text-decoration: none
@@ -92,6 +93,22 @@ textarea
 /*.radio-inline
   &:nth-child(2)
     margin-left: 40px*/
+
+.u-radio-layer
+  position: relative
+  .u-layer
+    display: none
+    position: absolute
+    z-index: 1
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: #fff
+    opacity: .8
+  &.layer
+    .u-layer
+      display: block
 
 .u-btn-group
   text-align: center
