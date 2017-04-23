@@ -8,18 +8,18 @@ function Music() {
     Music.prototype = {
         total:70,
         pageSize:10,
-        dataUrl:"http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.search.common",
-        playerUrl:"http://box.baidu.com/widget/flash/bdspacesong.swf",
+        dataUrl:'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.search.common',
+        playerUrl:'http://box.baidu.com/widget/flash/bdspacesong.swf',
 
         init:function () {
             var me = this;
-            domUtils.on($G("J_searchName"), "keyup", function (event) {
+            domUtils.on($G('J_searchName'), 'keyup', function (event) {
                 var e = window.event || event;
                 if (e.keyCode == 13) {
                     me.dosearch();
                 }
             });
-            domUtils.on($G("J_searchBtn"), "click", function () {
+            domUtils.on($G('J_searchBtn'), 'click', function () {
                 me.dosearch();
             });
         },
@@ -34,7 +34,7 @@ function Music() {
             var me = this;
             selectedItem = null;
             var key = $G('J_searchName').value;
-            if (utils.trim(key) == "")return false;
+            if (utils.trim(key) == '')return false;
             key = encodeURIComponent(key);
             me._sent(key);
         },
@@ -76,14 +76,14 @@ function Music() {
 
             utils.loadFile(document, {
                 src:me.dataUrl + '&query=' + param + '&page_size=' + me.total + '&callback=music.callback&.r=' + Math.random(),
-                tag:"script",
-                type:"text/javascript",
-                defer:"defer"
+                tag:'script',
+                type:'text/javascript',
+                defer:'defer'
             });
         },
         _removeHtml:function (str) {
             var reg = /<\s*\/?\s*[^>]*\s*>/gi;
-            return str.replace(reg, "");
+            return str.replace(reg, '');
         },
         _getUrl:function (isTryListen) {
             var me = this;
@@ -91,7 +91,7 @@ function Music() {
                 + encodeURIComponent(me._removeHtml(selectedItem.author)) + '&extra='
                 + encodeURIComponent(me._removeHtml(selectedItem.album_title))
                 + '&autoPlay='+isTryListen+'' + '&loop=true';
-            return  me.playerUrl + "?" + param;
+            return  me.playerUrl + '?' + param;
         },
         _getTryingElem:function () {
             var s = $G('J_listPanel').getElementsByTagName('span');
@@ -111,14 +111,14 @@ function Music() {
             return html;
         },
         _byteLength:function (str) {
-            return str.replace(/[^\u0000-\u007f]/g, "\u0061\u0061").length;
+            return str.replace(/[^\u0000-\u007f]/g, '\u0061\u0061').length;
         },
         _getMaxText:function (s) {
             var me = this;
             s = me._removeHtml(s);
             if (me._byteLength(s) > 12)
                 return s.substring(0, 5) + '...';
-            if (!s) s = "&nbsp;";
+            if (!s) s = '&nbsp;';
             return s;
         },
         _rebuildData:function (data) {
@@ -178,7 +178,7 @@ function Music() {
         exec:function () {
             var me = this;
             if (selectedItem == null)   return;
-            $G('J_preview').innerHTML = "";
+            $G('J_preview').innerHTML = '';
             editor.execCommand('music', {
                 url:me._getUrl(false),
                 width:400,

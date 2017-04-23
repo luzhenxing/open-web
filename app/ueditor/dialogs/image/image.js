@@ -22,7 +22,7 @@
     function initTabs() {
         var tabs = $G('tabhead').children;
         for (var i = 0; i < tabs.length; i++) {
-            domUtils.on(tabs[i], "click", function (e) {
+            domUtils.on(tabs[i], 'click', function (e) {
                 var target = e.target || e.srcElement;
                 setTabFocus(target.getAttribute('data-content-id'));
             });
@@ -105,7 +105,7 @@
 
             if(list) {
                 editor.execCommand('insertimage', list);
-                remote && editor.fireEvent("catchRemoteImage");
+                remote && editor.fireEvent('catchRemoteImage');
             }
         };
     }
@@ -114,7 +114,7 @@
     /* 初始化对其方式的点击事件 */
     function initAlign(){
         /* 点击align图标 */
-        domUtils.on($G("alignIcon"), 'click', function(e){
+        domUtils.on($G('alignIcon'), 'click', function(e){
             var target = e.target || e.srcElement;
             if(target.className && target.className.indexOf('-align') != -1) {
                 setAlign(target.getAttribute('data-align'));
@@ -125,11 +125,11 @@
     /* 设置对齐方式 */
     function setAlign(align){
         align = align || 'none';
-        var aligns = $G("alignIcon").children;
+        var aligns = $G('alignIcon').children;
         for(i = 0; i < aligns.length; i++){
             if(aligns[i].getAttribute('data-align') == align) {
                 domUtils.addClass(aligns[i], 'focus');
-                $G("align").value = aligns[i].getAttribute('data-align');
+                $G('align').value = aligns[i].getAttribute('data-align');
             } else {
                 domUtils.removeClasses(aligns[i], 'focus');
             }
@@ -137,7 +137,7 @@
     }
     /* 获取对齐方式 */
     function getAlign(){
-        var align = $G("align").value || 'none';
+        var align = $G('align').value || 'none';
         return align == 'none' ? '':align;
     }
 
@@ -172,11 +172,11 @@
                 locker = $G('lock');
 
             /* 改变url */
-            domUtils.on($G("url"), 'keyup', updatePreview);
-            domUtils.on($G("border"), 'keyup', updatePreview);
-            domUtils.on($G("title"), 'keyup', updatePreview);
+            domUtils.on($G('url'), 'keyup', updatePreview);
+            domUtils.on($G('border'), 'keyup', updatePreview);
+            domUtils.on($G('title'), 'keyup', updatePreview);
 
-            domUtils.on($G("width"), 'keyup', function(){
+            domUtils.on($G('width'), 'keyup', function(){
                 updatePreview();
                 if(locker.checked) {
                     var proportion =locker.getAttribute('data-proportion');
@@ -185,7 +185,7 @@
                     _this.updateLocker();
                 }
             });
-            domUtils.on($G("height"), 'keyup', function(){
+            domUtils.on($G('height'), 'keyup', function(){
                 updatePreview();
                 if(locker.checked) {
                     var proportion =locker.getAttribute('data-proportion');
@@ -194,8 +194,8 @@
                     _this.updateLocker();
                 }
             });
-            domUtils.on($G("lock"), 'change', function(){
-                var proportion = parseInt($G("width").value) /parseInt($G("height").value);
+            domUtils.on($G('lock'), 'change', function(){
+                var proportion = parseInt($G('width').value) /parseInt($G('height').value);
                 locker.setAttribute('data-proportion', proportion);
             });
 
@@ -218,21 +218,21 @@
         },
         setImage: function(img){
             /* 不是正常的图片 */
-            if (!img.tagName || img.tagName.toLowerCase() != 'img' && !img.getAttribute("src") || !img.src) return;
+            if (!img.tagName || img.tagName.toLowerCase() != 'img' && !img.getAttribute('src') || !img.src) return;
 
-            var wordImgFlag = img.getAttribute("word_img"),
-                src = wordImgFlag ? wordImgFlag.replace("&amp;", "&") : (img.getAttribute('_src') || img.getAttribute("src", 2).replace("&amp;", "&")),
-                align = editor.queryCommandValue("imageFloat");
+            var wordImgFlag = img.getAttribute('word_img'),
+                src = wordImgFlag ? wordImgFlag.replace('&amp;', '&') : (img.getAttribute('_src') || img.getAttribute('src', 2).replace('&amp;', '&')),
+                align = editor.queryCommandValue('imageFloat');
 
             /* 防止onchange事件循环调用 */
-            if (src !== $G("url").value) $G("url").value = src;
+            if (src !== $G('url').value) $G('url').value = src;
             if(src) {
                 /* 设置表单内容 */
-                $G("width").value = img.width || '';
-                $G("height").value = img.height || '';
-                $G("border").value = img.getAttribute("border") || '0';
-                $G("vhSpace").value = img.getAttribute("vspace") || '0';
-                $G("title").value = img.title || img.alt || '';
+                $G('width').value = img.width || '';
+                $G('height').value = img.height || '';
+                $G('border').value = img.getAttribute('border') || '0';
+                $G('vhSpace').value = img.getAttribute('vspace') || '0';
+                $G('title').value = img.title || img.alt || '';
                 setAlign(align);
                 this.setPreview();
                 this.updateLocker();
@@ -275,7 +275,7 @@
                     floatStyle: data['align'] || '',
                     vspace: data['vhSpace'] || '',
                     alt: data['title'] || '',
-                    style: "width:" + data['width'] + "px;height:" + data['height'] + "px;"
+                    style: 'width:' + data['width'] + 'px;height:' + data['height'] + 'px;'
                 }];
             } else {
                 return [];
@@ -1038,8 +1038,8 @@
             var _this = this,
                 key = $G('searchTxt').value,
                 type = $G('searchType').value,
-                keepOriginName = editor.options.keepOriginName ? "1" : "0",
-                url = "http://image.baidu.com/i?ct=201326592&cl=2&lm=-1&st=-1&tn=baiduimagejson&istype=2&rn=32&fm=index&pv=&word=" + key + type + "&ie=utf-8&oe=utf-8&keeporiginname=" + keepOriginName + "&" + +new Date;
+                keepOriginName = editor.options.keepOriginName ? '1' : '0',
+                url = 'http://image.baidu.com/i?ct=201326592&cl=2&lm=-1&st=-1&tn=baiduimagejson&istype=2&rn=32&fm=index&pv=&word=' + key + type + '&ie=utf-8&oe=utf-8&keeporiginname=' + keepOriginName + '&' + +new Date;
 
             $G('searchListUl').innerHTML = lang.searchLoading;
             ajax.request(url, {

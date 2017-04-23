@@ -1554,9 +1554,9 @@ seriesTypes.waterfall = extendClass(seriesTypes.column, {
 			y = yData[i];
 			point = points && points[i] ? points[i] : {};
 
-			if (y === "sum" || point.isSum) {
+			if (y === 'sum' || point.isSum) {
 				yData[i] = sum;
-			} else if (y === "intermediateSum" || point.isIntermediateSum) {
+			} else if (y === 'intermediateSum' || point.isIntermediateSum) {
 				yData[i] = subSum;
 				subSum = threshold;
 			} else {
@@ -1579,9 +1579,9 @@ seriesTypes.waterfall = extendClass(seriesTypes.column, {
 	 */
 	toYData: function (pt) {
 		if (pt.isSum) {
-			return "sum";
+			return 'sum';
 		} else if (pt.isIntermediateSum) {
-			return "intermediateSum";
+			return 'intermediateSum';
 		}
 
 		return pt.y;

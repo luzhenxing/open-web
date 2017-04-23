@@ -14,7 +14,7 @@ var g = baidu.g,
 	flashObj,flashContainer;
 
 wordImage.init = function(opt, callbacks) {
-	showLocalPath("localPath");
+	showLocalPath('localPath');
 	//createCopyButton("clipboard","localPath");
 	createFlashUploader(opt, callbacks);
 	addUploadListener();
@@ -23,24 +23,24 @@ wordImage.init = function(opt, callbacks) {
 
 function hideFlash(){
     flashObj = null;
-    flashContainer.innerHTML = "";
+    flashContainer.innerHTML = '';
 }
 function addOkListener() {
 	dialog.onok = function() {
 		if (!imageUrls.length) return;
 		var urlPrefix = editor.getOpt('imageUrlPrefix'),
-            images = domUtils.getElementsByTagName(editor.document,"img");
+            images = domUtils.getElementsByTagName(editor.document,'img');
         editor.fireEvent('saveScene');
 		for (var i = 0,img; img = images[i++];) {
-			var src = img.getAttribute("word_img");
+			var src = img.getAttribute('word_img');
 			if (!src) continue;
 			for (var j = 0,url; url = imageUrls[j++];) {
-				if (src.indexOf(url.original.replace(" ","")) != -1) {
+				if (src.indexOf(url.original.replace(' ','')) != -1) {
 					img.src = urlPrefix + url.url;
-					img.setAttribute("_src", urlPrefix + url.url);  //同时修改"_src"属性
-					img.setAttribute("title",url.title);
-                    domUtils.removeAttributes(img, ["word_img","style","width","height"]);
-					editor.fireEvent("selectionchange");
+					img.setAttribute('_src', urlPrefix + url.url);  //同时修改"_src"属性
+					img.setAttribute('title',url.title);
+                    domUtils.removeAttributes(img, ['word_img','style','width','height']);
+					editor.fireEvent('selectionchange');
 					break;
 				}
 			}
@@ -57,9 +57,9 @@ function addOkListener() {
  * 绑定开始上传事件
  */
 function addUploadListener() {
-	g("upload").onclick = function () {
+	g('upload').onclick = function () {
 		flashObj.upload();
-		this.style.display = "none";
+		this.style.display = 'none';
 	};
 }
 
@@ -72,9 +72,9 @@ function showLocalPath(id) {
         return;
     }
 	var path = images[0];
-    var leftSlashIndex  = path.lastIndexOf("/")||0,  //不同版本的doc和浏览器都可能影响到这个符号，故直接判断两种
-        rightSlashIndex = path.lastIndexOf("\\")||0,
-        separater = leftSlashIndex > rightSlashIndex ? "/":"\\" ;
+    var leftSlashIndex  = path.lastIndexOf('/')||0,  //不同版本的doc和浏览器都可能影响到这个符号，故直接判断两种
+        rightSlashIndex = path.lastIndexOf('\\')||0,
+        separater = leftSlashIndex > rightSlashIndex ? '/':'\\' ;
 
 	path = path.substring(0, path.lastIndexOf(separater)+1);
 	g(id).value = path;
@@ -85,8 +85,8 @@ function createFlashUploader(opt, callbacks) {
     var i18n = utils.extend({},lang.flashI18n);
     //处理图片资源地址的编码，补全等问题
     for(var i in i18n){
-        if(!(i in {"lang":1,"uploadingTF":1,"imageTF":1,"textEncoding":1}) && i18n[i]){
-            i18n[i] = encodeURIComponent(editor.options.langPath + editor.options.lang + "/images/" + i18n[i]);
+        if(!(i in {'lang':1,'uploadingTF':1,'imageTF':1,'textEncoding':1}) && i18n[i]){
+            i18n[i] = encodeURIComponent(editor.options.langPath + editor.options.lang + '/images/' + i18n[i]);
         }
     }
     opt = utils.extend(opt,i18n,false);
@@ -121,37 +121,37 @@ function extendProperty(fromObj, toObj) {
 //})();
 
 function getPasteData(id) {
-	baidu.g("msg").innerHTML = lang.copySuccess + "</br>";
+	baidu.g('msg').innerHTML = lang.copySuccess + '</br>';
 	setTimeout(function() {
-		baidu.g("msg").innerHTML = "";
+		baidu.g('msg').innerHTML = '';
 	}, 5000);
 	return baidu.g(id).value;
 }
 
 function createCopyButton(id, dataFrom) {
 	baidu.swf.create({
-			id:"copyFlash",
-			url:"fClipboard_ueditor.swf",
-			width:"58",
-			height:"25",
-			errorMessage:"",
-			bgColor:"#CBCBCB",
-			wmode:"transparent",
-			ver:"10.0.0",
+			id:'copyFlash',
+			url:'fClipboard_ueditor.swf',
+			width:'58',
+			height:'25',
+			errorMessage:'',
+			bgColor:'#CBCBCB',
+			wmode:'transparent',
+			ver:'10.0.0',
 			vars:{
 				tid:dataFrom
 			}
 		}, id
 	);
 
-	var clipboard = baidu.swf.getMovie("copyFlash");
+	var clipboard = baidu.swf.getMovie('copyFlash');
 	var clipinterval = setInterval(function() {
 		if (clipboard && clipboard.flashInit) {
 			clearInterval(clipinterval);
 			clipboard.setHandCursor(true);
-			clipboard.setContentFuncName("getPasteData");
+			clipboard.setContentFuncName('getPasteData');
 			//clipboard.setMEFuncName("mouseEventHandler");
 		}
 	}, 500);
 }
-createCopyButton("clipboard", "localPath");
+createCopyButton('clipboard', 'localPath');

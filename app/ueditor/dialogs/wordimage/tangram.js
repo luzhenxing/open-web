@@ -22,8 +22,8 @@
  * @author: allstar, erik, meizz, berg
  */
 var T,
-    baidu = T = baidu || {version: "1.5.0"};
-baidu.guid = "$BAIDU$";
+    baidu = T = baidu || {version: '1.5.0'};
+baidu.guid = '$BAIDU$';
 baidu.$$ = window[baidu.guid] = window[baidu.guid] || {global:{}};
 
 /**
@@ -164,7 +164,7 @@ baidu.browser = baidu.browser || {};
  * 在Browser identification最后添加Version + 数字进行版本标识
  * opera后面的数字保持在9.80不变
  */
-baidu.browser.opera = /opera(\/| )(\d+(\.\d+)?)(.+?(version\/(\d+(\.\d+)?)))?/i.test(navigator.userAgent) ?  + ( RegExp["\x246"] || RegExp["\x242"] ) : undefined;
+baidu.browser.opera = /opera(\/| )(\d+(\.\d+)?)(.+?(version\/(\d+(\.\d+)?)))?/i.test(navigator.userAgent) ?  + ( RegExp['\x246'] || RegExp['\x242'] ) : undefined;
 
 
 /**
@@ -226,18 +226,18 @@ baidu.swf = baidu.swf || {};
 baidu.swf.version = (function () {
     var n = navigator;
     if (n.plugins && n.mimeTypes.length) {
-        var plugin = n.plugins["Shockwave Flash"];
+        var plugin = n.plugins['Shockwave Flash'];
         if (plugin && plugin.description) {
             return plugin.description
-                    .replace(/([a-zA-Z]|\s)+/, "")
-                    .replace(/(\s)+r/, ".") + ".0";
+                    .replace(/([a-zA-Z]|\s)+/, '')
+                    .replace(/(\s)+r/, '.') + '.0';
         }
     } else if (window.ActiveXObject && !window.opera) {
         for (var i = 12; i >= 2; i--) {
             try {
                 var c = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.' + i);
                 if (c) {
-                    var version = c.GetVariable("$version");
+                    var version = c.GetVariable('$version');
                     return version.replace(/WIN/g,'').replace(/,/g,'.');
                 }
             } catch(e) {}
@@ -271,8 +271,8 @@ baidu.string.encodeHTML = function (source) {
                 .replace(/&/g,'&amp;')
                 .replace(/</g,'&lt;')
                 .replace(/>/g,'&gt;')
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#39;");
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
 };
 
 baidu.encodeHTML = baidu.string.encodeHTML;
@@ -352,7 +352,7 @@ baidu.swf.createHTML = function (options) {
         var fvars = [];
         for (k in vars) {
             item = vars[k];
-            fvars.push(k + "=" + encodeURIComponent(item));
+            fvars.push(k + '=' + encodeURIComponent(item));
         }
         options['flashvars'] = fvars.join('&');
     }
@@ -402,7 +402,7 @@ baidu.swf.createHTML = function (options) {
     for (k in options) {
         item = options[k];
         if (item || item === false || item === 0) {
-            if ((new RegExp("^salign\x24", "i")).test(k)) {
+            if ((new RegExp('^salign\x24', 'i')).test(k)) {
                 salign = item;
                 continue;
             }
@@ -558,7 +558,7 @@ baidu.swf.getMovie = function (name) {
     return baidu.browser.ie == 9 ?
     	movie && movie.length ? 
     		(ret = baidu.array.remove(baidu.lang.toArray(movie),function(item){
-    			return item.tagName.toLowerCase() != "embed";
+    			return item.tagName.toLowerCase() != 'embed';
     		})).length == 1 ? ret[0] : ret
     		: movie
     	: movie || window[name];
@@ -1102,7 +1102,7 @@ baidu.sio._removeScriptTag = function(scr){
  * @see baidu.sio.callByServer
  */
 baidu.sio.callByBrowser = function (url, opt_callback, opt_options) {
-    var scr = document.createElement("SCRIPT"),
+    var scr = document.createElement('SCRIPT'),
         scriptLoaded = 0,
         options = opt_options || {},
         charset = options['charset'],
@@ -1116,8 +1116,8 @@ baidu.sio.callByBrowser = function (url, opt_callback, opt_options) {
         
         var readyState = scr.readyState;
         if ('undefined' == typeof readyState
-            || readyState == "loaded"
-            || readyState == "complete") {
+            || readyState == 'loaded'
+            || readyState == 'complete') {
             scriptLoaded = 1;
             try {
                 callback();
@@ -1281,7 +1281,7 @@ baidu.json = baidu.json || {};
  */
 baidu.json.parse = function (data) {
     //2010/12/09：更新至不使用原生parse，不检测用户输入是否正确
-    return (new Function("return (" + data + ")"))();
+    return (new Function('return (' + data + ')'))();
 };
 /*
  * Tangram
@@ -1338,13 +1338,13 @@ baidu.json.stringify = (function () {
      * @private
      */
     var escapeMap = {
-        "\b": '\\b',
-        "\t": '\\t',
-        "\n": '\\n',
-        "\f": '\\f',
-        "\r": '\\r',
+        '\b': '\\b',
+        '\t': '\\t',
+        '\n': '\\n',
+        '\f': '\\f',
+        '\r': '\\r',
         '"' : '\\"',
-        "\\": '\\\\'
+        '\\': '\\\\'
     };
     
     /**
@@ -1361,7 +1361,7 @@ baidu.json.stringify = (function () {
                         return c;
                     }
                     c = match.charCodeAt();
-                    return "\\u00" 
+                    return '\\u00' 
                             + Math.floor(c / 16).toString(16) 
                             + (c % 16).toString(16);
                 });
@@ -1374,7 +1374,7 @@ baidu.json.stringify = (function () {
      * @private
      */
     function encodeArray(source) {
-        var result = ["["], 
+        var result = ['['], 
             l = source.length,
             preComma, i, item;
             
@@ -1382,9 +1382,9 @@ baidu.json.stringify = (function () {
             item = source[i];
             
             switch (typeof item) {
-            case "undefined":
-            case "function":
-            case "unknown":
+            case 'undefined':
+            case 'function':
+            case 'unknown':
                 break;
             default:
                 if(preComma) {
@@ -1394,8 +1394,8 @@ baidu.json.stringify = (function () {
                 preComma = 1;
             }
         }
-        result.push("]");
-        return result.join("");
+        result.push(']');
+        return result.join('');
     }
     
     /**
@@ -1411,11 +1411,11 @@ baidu.json.stringify = (function () {
      * @private
      */
     function encodeDate(source){
-        return '"' + source.getFullYear() + "-" 
-                + pad(source.getMonth() + 1) + "-" 
-                + pad(source.getDate()) + "T" 
-                + pad(source.getHours()) + ":" 
-                + pad(source.getMinutes()) + ":" 
+        return '"' + source.getFullYear() + '-' 
+                + pad(source.getMonth() + 1) + '-' 
+                + pad(source.getDate()) + 'T' 
+                + pad(source.getHours()) + ':' 
+                + pad(source.getMinutes()) + ':' 
                 + pad(source.getSeconds()) + '"';
     }
     
@@ -1425,7 +1425,7 @@ baidu.json.stringify = (function () {
             return 'undefined';
             
         case 'number':
-            return isFinite(value) ? String(value) : "null";
+            return isFinite(value) ? String(value) : 'null';
             
         case 'string':
             return encodeString(value);

@@ -30,22 +30,23 @@
         UEDITOR_HOME_URL: URL
 
         // 服务器统一请求接口路径
-        , serverUrl: URL + "php/controller.php"
+        , serverUrl: URL + 'php/controller.php'
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
-        , toolbars: [[
-            'fullscreen', 'source', '|', 'undo', 'redo', '|',
-            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
-            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
-            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-            'directionalityltr', 'directionalityrtl', 'indent', '|',
-            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
-            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
-            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
-            'print', 'preview', 'searchreplace', 'drafts', 'help'
-        ]]
+        // , toolbars: [[
+        //     'fullscreen', 'source', '|', 'undo', 'redo', '|',
+        //     'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+        //     'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+        //     'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+        //     'directionalityltr', 'directionalityrtl', 'indent', '|',
+        //     'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+        //     'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+        //     'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+        //     'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+        //     'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+        //     'print', 'preview', 'searchreplace', 'drafts', 'help'
+        // ]]
+        , toolbars:[['fontsize']]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
         //    'anchor':'', 'undo':''
@@ -202,7 +203,7 @@
 
         //fontsize
         //字号
-        //,'fontsize':[10, 11, 12, 14, 16, 18, 20, 24, 36]
+        // ,'fontsize':[10, 11, 12, 14, 16, 18, 20, 24, 36]
 
         //paragraph
         //段落格式 值留空时支持多语言自动识别，若配置，则以配置值为准
@@ -390,9 +391,9 @@
 
         } else if (!/^[a-z]+:/i.test(confUrl)) {
 
-            docUrl = docUrl.split("#")[0].split("?")[0].replace(/[^\\\/]+$/, '');
+            docUrl = docUrl.split('#')[0].split('?')[0].replace(/[^\\\/]+$/, '');
 
-            basePath = docUrl + "" + confUrl;
+            basePath = docUrl + '' + confUrl;
 
         }
 
@@ -406,23 +407,23 @@
             tmp = null,
             res = [];
 
-        path = path.replace(protocol, "").split("?")[0].split("#")[0];
+        path = path.replace(protocol, '').split('?')[0].split('#')[0];
 
         path = path.replace(/\\/g, '/').split(/\//);
 
-        path[ path.length - 1 ] = "";
+        path[ path.length - 1 ] = '';
 
         while (path.length) {
 
-            if (( tmp = path.shift() ) === "..") {
+            if (( tmp = path.shift() ) === '..') {
                 res.pop();
-            } else if (tmp !== ".") {
+            } else if (tmp !== '.') {
                 res.push(tmp);
             }
 
         }
 
-        return protocol + res.join("/");
+        return protocol + res.join('/');
 
     }
 

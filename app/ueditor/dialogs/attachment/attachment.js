@@ -19,7 +19,7 @@
     function initTabs() {
         var tabs = $G('tabhead').children;
         for (var i = 0; i < tabs.length; i++) {
-            domUtils.on(tabs[i], "click", function (e) {
+            domUtils.on(tabs[i], 'click', function (e) {
                 var target = e.target || e.srcElement;
                 setTabFocus(target.getAttribute('data-content-id'));
             });
@@ -680,7 +680,7 @@
                     icon = document.createElement('span');
                     filetype = list[i].url.substr(list[i].url.lastIndexOf('.') + 1);
 
-                    if ( "png|jpg|jpeg|gif|bmp".indexOf(filetype) != -1 ) {
+                    if ( 'png|jpg|jpeg|gif|bmp'.indexOf(filetype) != -1 ) {
                         preview = document.createElement('img');
                         domUtils.on(preview, 'load', (function(image){
                             return function(){

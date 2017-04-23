@@ -73,14 +73,14 @@
             },
             domReady : function (onready) {
                 var doc = window.document;
-                if (doc.readyState === "complete") {
+                if (doc.readyState === 'complete') {
                     onready();
                 }else{
                     if (isIE) {
                         (function () {
                             if (doc.isReady) return;
                             try {
-                                doc.documentElement.doScroll("left");
+                                doc.documentElement.doScroll('left');
                             } catch (error) {
                                 setTimeout(arguments.callee, 0);
                                 return;
@@ -91,8 +91,8 @@
                             onready()
                         });
                     } else {
-                        doc.addEventListener("DOMContentLoaded", function () {
-                            doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
+                        doc.addEventListener('DOMContentLoaded', function () {
+                            doc.removeEventListener('DOMContentLoaded', arguments.callee, false);
                             onready();
                         }, false);
                         window.addEventListener('load', function(){onready()}, false);
@@ -288,7 +288,7 @@
                     element.onerror = function(){
                         throw Error('The load '+(obj.href||obj.src)+' fails,check the url')
                     };
-                    doc.getElementsByTagName("head")[0].appendChild(element);
+                    doc.getElementsByTagName('head')[0].appendChild(element);
                 }
             }()
     };
@@ -337,7 +337,7 @@
 UE.parse.register('insertcode',function(utils){
     var pres = this.root.getElementsByTagName('pre');
     if(pres.length){
-        if(typeof XRegExp == "undefined"){
+        if(typeof XRegExp == 'undefined'){
             var jsurl,cssurl;
             if(this.rootPath !== undefined){
                 jsurl = utils.removeLastbs(this.rootPath)  + '/third-party/SyntaxHighlighter/shCore.js';
@@ -347,18 +347,18 @@ UE.parse.register('insertcode',function(utils){
                 cssurl = this.highlightCssUrl;
             }
             utils.loadFile(document,{
-                id : "syntaxhighlighter_css",
-                tag : "link",
-                rel : "stylesheet",
-                type : "text/css",
+                id : 'syntaxhighlighter_css',
+                tag : 'link',
+                rel : 'stylesheet',
+                type : 'text/css',
                 href : cssurl
             });
             utils.loadFile(document,{
-                id : "syntaxhighlighter_js",
+                id : 'syntaxhighlighter_js',
                 src : jsurl,
-                tag : "script",
-                type : "text/javascript",
-                defer : "defer"
+                tag : 'script',
+                type : 'text/javascript',
+                defer : 'defer'
             },function(){
                 utils.each(pres,function(pi){
                     if(pi && /brush/i.test(pi.className)){
@@ -445,7 +445,7 @@ UE.parse.register('table', function (utils) {
         function sortTable(table, sortByCellIndex, compareFn) {
             var rows = table.rows,
                 trArray = [],
-                flag = rows[0].cells[0].tagName === "TH",
+                flag = rows[0].cells[0].tagName === 'TH',
                 lastRowIndex = 0;
 
             for (var i = 0,len = rows.length; i < len; i++) {
@@ -483,17 +483,17 @@ UE.parse.register('table', function (utils) {
             };
 
             //对表格设置排序的标记data-sort-type
-            table.setAttribute('data-sort-type', compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn:'');
+            table.setAttribute('data-sort-type', compareFn && typeof compareFn === 'string' && Fn[compareFn] ? compareFn:'');
 
             //th不参与排序
             flag && trArray.splice(0, 1);
             trArray = sort(trArray,function (tr1, tr2) {
                 var result;
-                if (compareFn && typeof compareFn === "function") {
+                if (compareFn && typeof compareFn === 'function') {
                     result = compareFn.call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
-                } else if (compareFn && typeof compareFn === "number") {
+                } else if (compareFn && typeof compareFn === 'number') {
                     result = 1;
-                } else if (compareFn && typeof compareFn === "string" && Fn[compareFn]) {
+                } else if (compareFn && typeof compareFn === 'string' && Fn[compareFn]) {
                     result = Fn[compareFn].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
                 } else {
                     result = Fn['orderbyasc'].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
@@ -504,7 +504,7 @@ UE.parse.register('table', function (utils) {
             for (var j = 0, len = trArray.length; j < len; j++) {
                 fragment.appendChild(trArray[j]);
             }
-            var tbody = table.getElementsByTagName("tbody")[0];
+            var tbody = table.getElementsByTagName('tbody')[0];
             if(!lastRowIndex){
                 tbody.appendChild(fragment);
             }else{
@@ -528,11 +528,11 @@ UE.parse.register('table', function (utils) {
         //更新表格
         function updateTable(table) {
             //给第一行设置firstRow的样式名称,在排序图标的样式上使用到
-            if(!utils.hasClass(table.rows[0], "firstRow")) {
+            if(!utils.hasClass(table.rows[0], 'firstRow')) {
                 for(var i = 1; i< table.rows.length; i++) {
-                    utils.removeClass(table.rows[i], "firstRow");
+                    utils.removeClass(table.rows[i], 'firstRow');
                 }
-                utils.addClass(table.rows[0], "firstRow");
+                utils.addClass(table.rows[0], 'firstRow');
             }
         }
     }
@@ -573,11 +573,11 @@ UE.parse.register('charts',function( utils ){
     function extractChartData ( rootNode ) {
 
         var data = [],
-            tables = rootNode.getElementsByTagName( "table" );
+            tables = rootNode.getElementsByTagName( 'table' );
 
         for ( var i = 0, tableNode; tableNode = tables[ i ]; i++ ) {
 
-            if ( tableNode.getAttribute( "data-chart" ) !== null ) {
+            if ( tableNode.getAttribute( 'data-chart' ) !== null ) {
 
                 data.push( formatData( tableNode ) );
 
@@ -591,7 +591,7 @@ UE.parse.register('charts',function( utils ){
 
     function formatData ( tableNode ) {
 
-        var meta = tableNode.getAttribute( "data-chart" ),
+        var meta = tableNode.getAttribute( 'data-chart' ),
             metaConfig = {},
             data = [];
 
@@ -612,10 +612,10 @@ UE.parse.register('charts',function( utils ){
         }
 
         //解析元信息
-        meta = meta.split( ";" );
+        meta = meta.split( ';' );
         for ( var i = 0, metaData; metaData = meta[ i ]; i++ ) {
 
-            metaData = metaData.split( ":" );
+            metaData = metaData.split( ':' );
             metaConfig[ metaData[ 0 ] ] = metaData[ 1 ];
 
         }
@@ -642,10 +642,10 @@ UE.parse.register('charts',function( utils ){
         if ( !window.jQuery ) {
 
             utils.loadFile(document,{
-                src : resourceRoot + "/third-party/jquery-1.10.2.min.js",
-                tag : "script",
-                type : "text/javascript",
-                defer : "defer"
+                src : resourceRoot + '/third-party/jquery-1.10.2.min.js',
+                tag : 'script',
+                type : 'text/javascript',
+                defer : 'defer'
             },function(){
 
                 loadHighcharts();
@@ -666,10 +666,10 @@ UE.parse.register('charts',function( utils ){
         if ( !window.Highcharts ) {
 
             utils.loadFile(document,{
-                src : resourceRoot + "/third-party/highcharts/highcharts.js",
-                tag : "script",
-                type : "text/javascript",
-                defer : "defer"
+                src : resourceRoot + '/third-party/highcharts/highcharts.js',
+                tag : 'script',
+                type : 'text/javascript',
+                defer : 'defer'
             },function(){
 
                 loadTypeConfig();
@@ -688,10 +688,10 @@ UE.parse.register('charts',function( utils ){
     function loadTypeConfig () {
 
         utils.loadFile(document,{
-            src : resourceRoot + "/dialogs/charts/chart.config.js",
-            tag : "script",
-            type : "text/javascript",
-            defer : "defer"
+            src : resourceRoot + '/dialogs/charts/chart.config.js',
+            tag : 'script',
+            type : 'text/javascript',
+            defer : 'defer'
         },function(){
 
             render();
@@ -785,8 +785,8 @@ UE.parse.register('charts',function( utils ){
      * */
     function createContainer ( tableNode ) {
 
-        var container = document.createElement( "div" );
-        container.className = "edui-chart-container";
+        var container = document.createElement( 'div' );
+        container.className = 'edui-chart-container';
 
         tableNode.parentNode.replaceChild( container, tableNode );
 
@@ -805,7 +805,7 @@ UE.parse.register('charts',function( utils ){
             meta = config.meta;
 
         //数据对齐方式为相反的方式， 需要反转数据
-        if ( meta.dataFormat != "1" ) {
+        if ( meta.dataFormat != '1' ) {
 
             for ( var i = 0, len = data.length; i < len ; i++ ) {
 
@@ -1000,17 +1000,17 @@ UE.parse.register('vedio',function(utils){
             videojs.autoSetup();
         } else {
             utils.loadFile(document,{
-                id : "video_css",
-                tag : "link",
-                rel : "stylesheet",
-                type : "text/css",
+                id : 'video_css',
+                tag : 'link',
+                rel : 'stylesheet',
+                type : 'text/css',
                 href : cssurl
             });
             utils.loadFile(document,{
-                id : "video_js",
+                id : 'video_js',
                 src : jsurl,
-                tag : "script",
-                type : "text/javascript"
+                tag : 'script',
+                type : 'text/javascript'
             },function(){
                 videojs.options.flash.swf = swfUrl;
                 videojs.autoSetup();

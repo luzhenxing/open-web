@@ -12,19 +12,19 @@
     function initTabs(){
         var tabs = $G('tabHeads').children;
         for (var i = 0; i < tabs.length; i++) {
-            domUtils.on(tabs[i], "click", function (e) {
+            domUtils.on(tabs[i], 'click', function (e) {
                 var target = e.target || e.srcElement;
                 for (var j = 0; j < tabs.length; j++) {
                     if(tabs[j] == target){
-                        tabs[j].className = "focus";
+                        tabs[j].className = 'focus';
                         var contentId = tabs[j].getAttribute('data-content-id');
-                        $G(contentId).style.display = "block";
+                        $G(contentId).style.display = 'block';
                         if(contentId == 'imgManager') {
                             initImagePanel();
                         }
                     }else {
-                        tabs[j].className = "";
-                        $G(tabs[j].getAttribute('data-content-id')).style.display = "none";
+                        tabs[j].className = '';
+                        $G(tabs[j].getAttribute('data-content-id')).style.display = 'none';
                     }
                 }
             });
@@ -59,7 +59,7 @@
         domUtils.on($G('nocolorRadio'), 'click', updateBackground);
         domUtils.on($G('coloredRadio'), 'click', updateHandler);
         domUtils.on($G('url'), 'keyup', function(){
-            if($G('url').value && $G('alignment').style.display == "none") {
+            if($G('url').value && $G('alignment').style.display == 'none') {
                 utils.each($G('repeatType').children, function(item){
                     item.selected = ('repeat' == item.getAttribute('value') ? 'selected':false);
                 });
@@ -76,12 +76,12 @@
     /* 初始化颜色选择器 */
     function initColorPicker() {
         var me = editor,
-            cp = $G("colorPicker");
+            cp = $G('colorPicker');
 
         /* 生成颜色选择器ui对象 */
         var popup = new UE.ui.Popup({
             content: new UE.ui.ColorPicker({
-                noColorText: me.getLang("clearColor"),
+                noColorText: me.getLang('clearColor'),
                 editor: me,
                 onpickcolor: function (t, color) {
                     updateFormState('colored', color);
@@ -100,7 +100,7 @@
         });
 
         /* 设置颜色选择器 */
-        domUtils.on(cp, "click", function () {
+        domUtils.on(cp, 'click', function () {
             popup.showAnchor(this);
         });
         domUtils.on(document, 'mousedown', function (evt) {
@@ -127,7 +127,7 @@
             coloredRadio.checked = (radio == 'colored' ? 'checked':false);
         }
         if(color) {
-            domUtils.setStyle($G("colorPicker"), "background-color", color);
+            domUtils.setStyle($G('colorPicker'), 'background-color', color);
         }
 
         if(url && /^\//.test(url)) {
@@ -157,20 +157,20 @@
     /* 更新背景颜色 */
     function updateBackground () {
         if ($G('coloredRadio').checked) {
-            var color = domUtils.getStyle($G("colorPicker"), "background-color"),
-                bgimg = $G("url").value,
-                align = $G("repeatType").value,
+            var color = domUtils.getStyle($G('colorPicker'), 'background-color'),
+                bgimg = $G('url').value,
+                align = $G('repeatType').value,
                 backgroundObj = {
-                    "background-repeat": "no-repeat",
-                    "background-position": "center center"
+                    'background-repeat': 'no-repeat',
+                    'background-position': 'center center'
                 };
 
-            if (color) backgroundObj["background-color"] = color;
-            if (bgimg) backgroundObj["background-image"] = 'url(' + bgimg + ')';
+            if (color) backgroundObj['background-color'] = color;
+            if (bgimg) backgroundObj['background-image'] = 'url(' + bgimg + ')';
             if (align == 'self') {
-                backgroundObj["background-position"] = $G("x").value + "px " + $G("y").value + "px";
+                backgroundObj['background-position'] = $G('x').value + 'px ' + $G('y').value + 'px';
             } else if (align == 'repeat-x' || align == 'repeat-y' || align == 'repeat') {
-                backgroundObj["background-repeat"] = align;
+                backgroundObj['background-repeat'] = align;
             }
 
             editor.execCommand('background', backgroundObj);
@@ -225,7 +225,7 @@
                     for (var i = 0, node; node = nodes[i++];) {
                         if (node == li && !domUtils.hasClass(node, 'selected')) {
                             domUtils.addClass(node, 'selected');
-                            updateFormState('colored', null, li.firstChild.getAttribute("_src"), 'repeat');
+                            updateFormState('colored', null, li.firstChild.getAttribute('_src'), 'repeat');
                         } else {
                             domUtils.removeClasses(node, 'selected');
                         }

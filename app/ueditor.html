@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <title>开源社会网 - UEditor</title>
+
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css styles/style.css -->
+  <link rel="stylesheet" href="styles/item-ueditor.css">
+  <!-- endbuild -->
+</head>
+<body>
+<button id="show-ueditor" type="button" class="btn btn-default">编辑器</button>
+<div class="container">
+  <div id="ueditor" class="item-ueditor">
+    <div id="editor_toolbar_box" class="item-ueditor-toolbar-wrapper">
+      <div class="item-ueditor-toolbar">
+        <div class="dropdown item-ueditor-toolbtn">
+          <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownFontSize"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            字号
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownFontSize">
+            <li class="text-center"><a href="javascript:;">标准</a></li>
+            <li class="text-center"><a href="javascript:;">小</a></li>
+            <li class="text-center"><a href="javascript:;">中</a></li>
+            <li class="text-center"><a href="javascript:;">大</a></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-xs btn-default item-ueditor-toolbtn">B</button>
+        <button type="button" class="btn btn-xs btn-default item-ueditor-toolbtn">I</button>
+        <button type="button" class="btn btn-xs btn-default item-ueditor-toolbtn">U</button>
+        <span class="">|</span>
+        <div class="dropdown item-ueditor-toolbtn">
+          <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownInset" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="true">
+            插入
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownInset">
+            <li><a href="javascript:;">图片</a></li>
+            <li><a href="javascript:;">表格</a></li>
+            <li><a href="javascript:;">超链接</a></li>
+            <li><a href="javascript:;">地图</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="editor_iframe_holder" class="item-editor-iframe-holder"></div>
+  </div>
+</div>
+
+<div class="item-ueditor-layer">
+  <div class="item-button-group text-center">
+    <button type="button" class="btn btn-sm btn-default">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      添加段
+    </button>
+    <button type="button" class="btn btn-sm btn-default">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      删除段
+    </button>
+    <button type="button" class="btn btn-sm btn-default">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      合并
+    </button>
+    <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="支持Word文件">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      导入
+    </button>
+  </div>
+  <div class="item-container container">
+    <div class="panel u-panel-style">
+      <div class="panel-body item-list-wrapper">
+        <ul class="item-list">
+          <li>
+            <label class="checkbox" for="check1"><input id="check1" type="checkbox"></label>
+            <div class="item-content">
+              <div class="item-inner">
+                <p>
+                  近年来，随着深度学习算法的发展，人工智能在识别和感知领域有了长足的进步，机器似乎有了五感，能看能听能说话还能动！那么，本期圆桌我们一起来关注人工智能领域的新发展，看看计算机视觉、语音识别和机器人领域都发生了什么有趣的进展吧
+                </p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <label class="checkbox" for="check2"><input id="check2" type="checkbox"></label>
+            <div class="item-content">
+              <div class="item-inner">
+                <p>1. 针对特定问题的Unsupervised Learning： GAN自从去年NIPS之后就成了想AlphaGo一样火爆的关键词，似乎不搞GAN就不是做ML的一样 :-D 然
+                  而，Unsupervised Learning不仅仅有GAN。从我的角度来看，GAN这样的东西过于通用而不具有太多实用的价值。（当然这个不绝对，也有不少利
+                  用GAN思想很漂亮解决实际问题的工作。）我个人更关注的是来自Berkeley和CMU两个组的Unsupervised Learning的工作。这些工作的一个特性就
+                  是，充分利用了vision数据中的一些特点来寻找Supervision Signal，既可以是motion，也可以是context等等。然而所有这些方法最终都是等这些通
+                  用的high level vision的数据集上测试，我们觉得是非常不合适的。不同类型的任务，需要的feature也应该是大相径庭的。所以，一方面，我们根据
+                  想解决的问题，灵活利用这些天然存在的supervision signal去设计我们的unsupervised learning算法，使得unsupervised learning的过程能真正帮
+                  助我们解决存在的问题；另一方面，在我们在做的自动驾驶中，存在更多multi modal的数据。除去RGB图像，可能还会有Lidar, GPS, IMU等等。如
+                  何交叉利用这些multi modal的信息，寻找最廉价有效的Supervision Signal，也会是一个很有意义的问题。最终我们希望，通过这些虽然噪声较大，
+                  但是廉价的自标注数据，大幅度降低对人工标注高精度数据的需求。我们去年最开始的一个尝试，也已经发表在ICRA2017上。</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="u-btn-group text-center">
+      <button type="button" class="btn btn-default">取消</button>
+      <button id="ueditor-btn-save" type="button" class="btn btn-default">暂存</button>
+      <button id="ueditor-btn-prev" type="button" class="btn btn-default">上一步</button>
+      <button id="ueditor-btn-review" type="button" class="btn btn-default">预览</button>
+      <button id="ueditor-btn-submit" type="button" class="btn btn-success">提交</button>
+    </div>
+  </div>
+</div>
+
+<!-- build:js scripts/vendor.js -->
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/modernizr/modernizr.js"></script>
+<script src="/bower_components/art-template/lib/template-web.js"></script>
+<script src="/bower_components/requirejs/require.js"></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/plugins.js -->
+<script src="/bower_components/bootstrap/js/affix.js"></script>
+<script src="/bower_components/bootstrap/js/alert.js"></script>
+<script src="/bower_components/bootstrap/js/dropdown.js"></script>
+<script src="/bower_components/bootstrap/js/tooltip.js"></script>
+<script src="/bower_components/bootstrap/js/modal.js"></script>
+<script src="/bower_components/bootstrap/js/transition.js"></script>
+<script src="/bower_components/bootstrap/js/button.js"></script>
+<script src="/bower_components/bootstrap/js/popover.js"></script>
+<script src="/bower_components/bootstrap/js/carousel.js"></script>
+<script src="/bower_components/bootstrap/js/scrollspy.js"></script>
+<script src="/bower_components/bootstrap/js/collapse.js"></script>
+<script src="/bower_components/bootstrap/js/tab.js"></script>
+<!-- endbuild -->
+
+<script src="scripts/ueditor.config.js"></script>
+<script src="/ueditor/ueditor.all.js"></script>
+<script>
+  var $ueditor = $('#ueditor')
+  var ue = UE.getEditor('editor_iframe_holder', {
+    //    initialFrameHeight:300
+  })
+  //  ue.addListener('ready', function () {
+  //    $('#ueditor').show()
+  //  });
+  $('#show-ueditor').on('click', function () {
+    $('.item-ueditor-layer').show()
+  })
+  $(() => {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+</body>
+</html>

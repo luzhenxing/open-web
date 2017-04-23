@@ -16,7 +16,7 @@ window.onload = function () {
 
     //未找到表格， 显示错误页面
     if ( !editorTable ) {
-        document.body.innerHTML = "<div class='edui-charts-not-data'>未找到数据</div>";
+        document.body.innerHTML = '<div class=\'edui-charts-not-data\'>未找到数据</div>';
         return;
     }
 
@@ -24,11 +24,11 @@ window.onload = function () {
     initChartsTypeView();
     renderTable( editorTable );
     initEvent();
-    initUserConfig( editorTable.getAttribute( "data-chart" ) );
-    $( "#scrollBed .view-box:eq("+ currentChartType +")" ).trigger( "click" );
+    initUserConfig( editorTable.getAttribute( 'data-chart' ) );
+    $( '#scrollBed .view-box:eq('+ currentChartType +')' ).trigger( 'click' );
     updateViewType( currentChartType );
 
-    dialog.addListener( "resize", function () {
+    dialog.addListener( 'resize', function () {
 
         if ( resizeTimer != null ) {
             window.clearTimeout( resizeTimer );
@@ -56,7 +56,7 @@ function initChartsTypeView () {
 
     }
 
-    $( "#scrollBed" ).html( contents.join( "" ) );
+    $( '#scrollBed' ).html( contents.join( '' ) );
 
 }
 
@@ -89,12 +89,12 @@ function renderTable ( table ) {
 
         }
 
-        tableHtml[ i ] = tableHtml[ i ].join( "" );
+        tableHtml[ i ] = tableHtml[ i ].join( '' );
 
     }
 
     //draw 表格
-    $( "#tableContainer" ).html( '<table id="showTable" border="1"><tbody><tr>'+ tableHtml.join( "</tr><tr>" ) +'</tr></tbody></table>' );
+    $( '#tableContainer' ).html( '<table id="showTable" border="1"><tbody><tr>'+ tableHtml.join( '</tr><tr>' ) +'</tr></tbody></table>' );
 
 }
 
@@ -109,11 +109,11 @@ function initUserConfig ( config ) {
         return;
     }
 
-    config = config.split( ";" );
+    config = config.split( ';' );
 
     $.each( config, function ( index, item ) {
 
-        item = item.split( ":" );
+        item = item.split( ':' );
         parsedConfig[ item[ 0 ] ] = item[ 1 ];
 
     } );
@@ -129,17 +129,17 @@ function initEvent () {
         typeViewCount = chartsConfig.length- 1,
         $chartsTypeViewBox = $( '#scrollBed .view-box' );
 
-    $( ".charts-format" ).delegate( ".format-ctrl", "change", function () {
+    $( '.charts-format' ).delegate( '.format-ctrl', 'change', function () {
 
         renderCharts();
 
     } )
 
-    $( ".table-view" ).delegate( ".data-item", "focus", function () {
+    $( '.table-view' ).delegate( '.data-item', 'focus', function () {
 
         cacheValue = this.value;
 
-    } ).delegate( ".data-item", "blur", function () {
+    } ).delegate( '.data-item', 'blur', function () {
 
         if ( this.value !== cacheValue ) {
             renderCharts();
@@ -149,11 +149,11 @@ function initEvent () {
 
     } );
 
-    $( "#buttonContainer" ).delegate( "a", "click", function (e) {
+    $( '#buttonContainer' ).delegate( 'a', 'click', function (e) {
 
         e.preventDefault();
 
-        if ( this.getAttribute( "data-title" ) === 'prev' ) {
+        if ( this.getAttribute( 'data-title' ) === 'prev' ) {
 
             if ( currentChartType > 0 ) {
                 currentChartType--;
@@ -172,11 +172,11 @@ function initEvent () {
     } );
 
     //图表类型变化
-    $( '#scrollBed' ).delegate( ".view-box", "click", function (e) {
+    $( '#scrollBed' ).delegate( '.view-box', 'click', function (e) {
 
-        var index = $( this ).attr( "data-chart-type" );
-        $chartsTypeViewBox.removeClass( "selected" );
-        $( $chartsTypeViewBox[ index ] ).addClass( "selected" );
+        var index = $( this ).attr( 'data-chart-type' );
+        $chartsTypeViewBox.removeClass( 'selected' );
+        $( $chartsTypeViewBox[ index ] ).addClass( 'selected' );
 
         currentChartType = index | 0;
 
@@ -252,7 +252,7 @@ function renderCharts () {
 
 function updateViewType ( index ) {
 
-    $( "#scrollBed" ).css( 'marginLeft', -index*324+'px' );
+    $( '#scrollBed' ).css( 'marginLeft', -index*324+'px' );
 
 }
 
@@ -292,7 +292,7 @@ function getUserConfig () {
             //数据对齐方式
             tableDataFormat: getTableDataFormat (),
             //饼图提示文字
-            tip: $( "#tipInput" ).val()
+            tip: $( '#tipInput' ).val()
         };
 
     return info;
@@ -308,7 +308,7 @@ function setUserConfig ( config ) {
     config.xTitle && ( form[ 'x-title' ].value = config.xTitle );
     config.yTitle && ( form[ 'y-title' ].value = config.yTitle );
     config.suffix && ( form[ 'unit' ].value = config.suffix );
-    config.dataFormat == "-1" && ( form[ 'charts-format' ][ 1 ].checked = true );
+    config.dataFormat == '-1' && ( form[ 'charts-format' ][ 1 ].checked = true );
     config.tip && ( form[ 'tip' ].value = config.tip );
     currentChartType = config.chartType || 0;
 
@@ -323,7 +323,7 @@ function getSeriesAndCategories () {
         tableData = getTableData();
 
     //反转数据
-    if ( getTableDataFormat() === "-1" ) {
+    if ( getTableDataFormat() === '-1' ) {
 
         for ( var i = 0, len = tableData.length; i < len; i++ ) {
 
@@ -393,7 +393,7 @@ function enableNotPieConfig() {
 
 function updateConfigItem ( value ) {
 
-    var table = $( "#showTable" )[ 0 ],
+    var table = $( '#showTable' )[ 0 ],
         isDisable = value === 'disable' ? true : false;
 
     //table中的input处理
@@ -401,15 +401,15 @@ function updateConfigItem ( value ) {
 
         for ( var j = 1, cell; cell = row.cells[ j ]; j++ ) {
 
-            $( "input", cell ).attr( "disabled", isDisable );
+            $( 'input', cell ).attr( 'disabled', isDisable );
 
         }
 
     }
 
     //其他项处理
-    $( "input.not-pie-item" ).attr( "disabled", isDisable );
-    $( "#tipInput" ).attr( "disabled", !isDisable )
+    $( 'input.not-pie-item' ).attr( 'disabled', isDisable );
+    $( '#tipInput' ).attr( 'disabled', !isDisable )
 
 }
 
@@ -421,7 +421,7 @@ function getSeriesForPieChart () {
 
     var series = {
             type: 'pie',
-            name: $("#tipInput").val(),
+            name: $('#tipInput').val(),
             data: []
         },
         tableData = getTableData();
@@ -444,7 +444,7 @@ function getSeriesForPieChart () {
 
 function getTableData () {
 
-    var table = document.getElementById( "showTable" ),
+    var table = document.getElementById( 'showTable' ),
         xCount = table.rows[0].cells.length - 1,
         values = getTableInputValue();
 
@@ -460,8 +460,8 @@ function getTableData () {
 
 function getTableInputValue () {
 
-    var table = document.getElementById( "showTable" ),
-        inputs = table.getElementsByTagName( "input" ),
+    var table = document.getElementById( 'showTable' ),
+        inputs = table.getElementsByTagName( 'input' ),
         values = [];
 
     for ( var i = 0, input; input = inputs[ i ]; i++ ) {

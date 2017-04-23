@@ -14,14 +14,14 @@
 function clickHandler( tabHeads,tabBodys,obj ) {
     //head样式更改
     for ( var k = 0, len = tabHeads.length; k < len; k++ ) {
-        tabHeads[k].className = "";
+        tabHeads[k].className = '';
     }
-    obj.className = "focus";
+    obj.className = 'focus';
     //body显隐
-    var tabSrc = obj.getAttribute( "tabSrc" );
+    var tabSrc = obj.getAttribute( 'tabSrc' );
     for ( var j = 0, length = tabBodys.length; j < length; j++ ) {
         var body = tabBodys[j],
-            id = body.getAttribute( "id" );
+            id = body.getAttribute( 'id' );
         body.onclick = function(){
             this.style.zoom = 1;
         };
@@ -45,12 +45,12 @@ function switchTab( tabParentId ) {
 
     for ( var i = 0, length = tabHeads.length; i < length; i++ ) {
         var head = tabHeads[i];
-        if ( head.className === "focus" )clickHandler(tabHeads,tabBodys, head );
+        if ( head.className === 'focus' )clickHandler(tabHeads,tabBodys, head );
         head.onclick = function () {
             clickHandler(tabHeads,tabBodys,this);
         }
     }
 }
-switchTab("helptab");
+switchTab('helptab');
 
 document.getElementById('version').innerHTML = parent.UE.version;

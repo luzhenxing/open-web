@@ -9,7 +9,7 @@ var XRegExp;
 
 if (XRegExp) {
     // Avoid running twice, since that would break references to native globals
-    throw Error("can't load XRegExp twice in the same frame");
+    throw Error('can\'t load XRegExp twice in the same frame');
 }
 
 // Run within an anonymous function to protect variables and avoid new globals
@@ -31,15 +31,15 @@ if (XRegExp) {
 
         if (XRegExp.isRegExp(pattern)) {
             if (flags !== undefined)
-                throw TypeError("can't supply flags when constructing one RegExp from another");
+                throw TypeError('can\'t supply flags when constructing one RegExp from another');
             return clone(pattern);
         }
         // Tokens become part of the regex construction process, so protect against infinite
         // recursion when an XRegExp is constructed within a token handler or trigger
         if (isInsideConstructor)
-            throw Error("can't call the XRegExp constructor within token definition functions");
+            throw Error('can\'t call the XRegExp constructor within token definition functions');
 
-        flags = flags || "";
+        flags = flags || '';
         context = { // `this` object for custom tokens
             hasNamedCapture: false,
             captureNames: [],
@@ -62,9 +62,9 @@ if (XRegExp) {
                     pos += match[0].length;
                 } else {
                     chr = pattern.charAt(pos);
-                    if (chr === "[")
+                    if (chr === '[')
                         currScope = XRegExp.INSIDE_CLASS;
-                    else if (chr === "]")
+                    else if (chr === ']')
                         currScope = XRegExp.OUTSIDE_CLASS;
                     // Advance position one character
                     output.push(chr);
@@ -73,7 +73,7 @@ if (XRegExp) {
             }
         }
 
-        regex = RegExp(output.join(""), nativ.replace.call(flags, flagClip, ""));
+        regex = RegExp(output.join(''), nativ.replace.call(flags, flagClip, ''));
         regex._xregexp = {
             source: pattern,
             captureNames: context.hasNamedCapture ? context.captureNames : null
@@ -86,7 +86,7 @@ if (XRegExp) {
     //  Public properties
     //---------------------------------
 
-    XRegExp.version = "1.5.1";
+    XRegExp.version = '1.5.1';
 
     // Token scope bitflags
     XRegExp.INSIDE_CLASS = 1;
@@ -110,10 +110,10 @@ if (XRegExp) {
             replace: String.prototype.replace,
             split: String.prototype.split
         },
-        compliantExecNpcg = nativ.exec.call(/()??/, "")[1] === undefined, // check `exec` handling of nonparticipating capturing groups
+        compliantExecNpcg = nativ.exec.call(/()??/, '')[1] === undefined, // check `exec` handling of nonparticipating capturing groups
         compliantLastIndexIncrement = function () {
             var x = /^/g;
-            nativ.test.call(x, "");
+            nativ.test.call(x, '');
             return !x.lastIndex;
         }(),
         hasNativeY = RegExp.prototype.sticky !== undefined,
@@ -135,7 +135,7 @@ if (XRegExp) {
     // be disabled by `XRegExp.freezeTokens`
     XRegExp.addToken = function (regex, handler, scope, trigger) {
         tokens.push({
-            pattern: clone(regex, "g" + (hasNativeY ? "y" : "")),
+            pattern: clone(regex, 'g' + (hasNativeY ? 'y' : '')),
             handler: handler,
             scope: scope || XRegExp.OUTSIDE_CLASS,
             trigger: trigger || null
@@ -146,7 +146,7 @@ if (XRegExp) {
     // combination has previously been cached, the cached copy is returned; otherwise the newly
     // created regex is cached
     XRegExp.cache = function (pattern, flags) {
-        var key = pattern + "/" + (flags || "");
+        var key = pattern + '/' + (flags || '');
         return XRegExp.cache[key] || (XRegExp.cache[key] = XRegExp(pattern, flags));
     };
 
@@ -155,14 +155,14 @@ if (XRegExp) {
     // property, use `XRegExp(regex)`. Do not use `RegExp(regex)` because it will not preserve
     // special properties required for named capture
     XRegExp.copyAsGlobal = function (regex) {
-        return clone(regex, "g");
+        return clone(regex, 'g');
     };
 
     // Accepts a string; returns the string with regex metacharacters escaped. The returned string
     // can safely be used at any point within a regex to match the provided literal string. Escaped
     // characters are [ ] { } ( ) * + ? - . , \ ^ $ | # and whitespace
     XRegExp.escape = function (str) {
-        return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+        return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
     };
 
     // Accepts a string to search, regex to search with, position to start the search within the
@@ -170,7 +170,7 @@ if (XRegExp) {
     // after the position or at the specified position only. This function ignores the `lastIndex`
     // of the provided regex in its own handling, but updates the property for compatibility
     XRegExp.execAt = function (str, regex, pos, anchored) {
-        var r2 = clone(regex, "g" + ((anchored && hasNativeY) ? "y" : "")),
+        var r2 = clone(regex, 'g' + ((anchored && hasNativeY) ? 'y' : '')),
             match;
         r2.lastIndex = pos = pos || 0;
         match = r2.exec(str); // Run the altered `exec` (required for `lastIndex` fix, etc.)
@@ -185,7 +185,7 @@ if (XRegExp) {
     // syntax and flag changes. Should be run after XRegExp and any plugins are loaded
     XRegExp.freezeTokens = function () {
         XRegExp.addToken = function () {
-            throw Error("can't run addToken after freezeTokens");
+            throw Error('can\'t run addToken after freezeTokens');
         };
     };
 
@@ -194,14 +194,14 @@ if (XRegExp) {
     // constructor. This works correctly for variables created in another frame, when `instanceof`
     // and `constructor` checks would fail to work as intended
     XRegExp.isRegExp = function (o) {
-        return Object.prototype.toString.call(o) === "[object RegExp]";
+        return Object.prototype.toString.call(o) === '[object RegExp]';
     };
 
     // Executes `callback` once per match within `str`. Provides a simpler and cleaner way to
     // iterate over regex matches compared to the traditional approaches of subverting
     // `String.prototype.replace` or repeatedly calling `exec` within a `while` loop
     XRegExp.iterate = function (str, regex, callback, context) {
-        var r2 = clone(regex, "g"),
+        var r2 = clone(regex, 'g'),
             i = -1, match;
         while (match = r2.exec(str)) { // Run the altered `exec` (required for `lastIndex` fix, etc.)
             if (regex.global)
@@ -227,11 +227,11 @@ if (XRegExp) {
     XRegExp.matchChain = function (str, chain) {
         return function recurseChain (values, level) {
             var item = chain[level].regex ? chain[level] : {regex: chain[level]},
-                regex = clone(item.regex, "g"),
+                regex = clone(item.regex, 'g'),
                 matches = [], i;
             for (i = 0; i < values.length; i++) {
                 XRegExp.iterate(values[i], regex, function (match) {
-                    matches.push(item.backref ? (match[item.backref] || "") : match[0]);
+                    matches.push(item.backref ? (match[item.backref] || '') : match[0]);
                 });
             }
             return ((level === chain.length - 1) || !matches.length) ?
@@ -275,11 +275,11 @@ if (XRegExp) {
         if (match) {
             // Fix browsers whose `exec` methods don't consistently return `undefined` for
             // nonparticipating capturing groups
-            if (!compliantExecNpcg && match.length > 1 && indexOf(match, "") > -1) {
-                r2 = RegExp(this.source, nativ.replace.call(getNativeFlags(this), "g", ""));
+            if (!compliantExecNpcg && match.length > 1 && indexOf(match, '') > -1) {
+                r2 = RegExp(this.source, nativ.replace.call(getNativeFlags(this), 'g', ''));
                 // Using `str.slice(match.index)` rather than `match[0]` in case lookahead allowed
                 // matching due to characters outside the match
-                nativ.replace.call((str + "").slice(match.index), r2, function () {
+                nativ.replace.call((str + '').slice(match.index), r2, function () {
                     for (var i = 1; i < arguments.length - 2; i++) {
                         if (arguments[i] === undefined)
                             match[i] = undefined;
@@ -352,11 +352,11 @@ if (XRegExp) {
             if (!search.global)
                 origLastIndex = search.lastIndex;
         } else {
-            search = search + ""; // Type conversion
+            search = search + ''; // Type conversion
         }
 
-        if (Object.prototype.toString.call(replacement) === "[object Function]") {
-            result = nativ.replace.call(this + "", search, function () {
+        if (Object.prototype.toString.call(replacement) === '[object Function]') {
+            result = nativ.replace.call(this + '', search, function () {
                 if (captureNames) {
                     // Change the `arguments[0]` string primitive to a String object which can store properties
                     arguments[0] = new String(arguments[0]);
@@ -372,17 +372,17 @@ if (XRegExp) {
                 return replacement.apply(null, arguments);
             });
         } else {
-            str = this + ""; // Type conversion, so `args[args.length - 1]` will be a string (given nonstring `this`)
+            str = this + ''; // Type conversion, so `args[args.length - 1]` will be a string (given nonstring `this`)
             result = nativ.replace.call(str, search, function () {
                 var args = arguments; // Keep this function's `arguments` available through closure
-                return nativ.replace.call(replacement + "", replacementToken, function ($0, $1, $2) {
+                return nativ.replace.call(replacement + '', replacementToken, function ($0, $1, $2) {
                     // Numbered backreference (without delimiters) or special variable
                     if ($1) {
                         switch ($1) {
-                            case "$": return "$";
-                            case "&": return args[0];
-                            case "`": return args[args.length - 1].slice(0, args[args.length - 2]);
-                            case "'": return args[args.length - 1].slice(args[args.length - 2] + args[0].length);
+                            case '$': return '$';
+                            case '&': return args[0];
+                            case '`': return args[args.length - 1].slice(0, args[args.length - 2]);
+                            case '\'': return args[args.length - 1].slice(args[args.length - 2] + args[0].length);
                             // Numbered backreference
                             default:
                                 // What does "$10" mean?
@@ -393,7 +393,7 @@ if (XRegExp) {
                                 // - Backreferences cannot be more than two digits (enforced by `replacementToken`)
                                 // - "$01" is equivalent to "$1" if a capturing group exists, otherwise it's the string "$01"
                                 // - There is no "$0" token ("$&" is the entire match)
-                                var literalNumbers = "";
+                                var literalNumbers = '';
                                 $1 = +$1; // Type conversion; drop leading zero
                                 if (!$1) // `$1` was "0" or "00"
                                     return $0;
@@ -401,7 +401,7 @@ if (XRegExp) {
                                     literalNumbers = String.prototype.slice.call($1, -1) + literalNumbers;
                                     $1 = Math.floor($1 / 10); // Drop the last digit
                                 }
-                                return ($1 ? args[$1] || "" : "$") + literalNumbers;
+                                return ($1 ? args[$1] || '' : '$') + literalNumbers;
                         }
                         // Named backreference or delimited numbered backreference
                     } else {
@@ -437,7 +437,7 @@ if (XRegExp) {
         if (!XRegExp.isRegExp(s))
             return nativ.split.apply(this, arguments);
 
-        var str = this + "", // Type conversion
+        var str = this + '', // Type conversion
             output = [],
             lastLastIndex = 0,
             match, lastLength;
@@ -479,8 +479,8 @@ if (XRegExp) {
         }
 
         if (lastLastIndex === str.length) {
-            if (!nativ.test.call(s, "") || lastLength)
-                output.push("");
+            if (!nativ.test.call(s, '') || lastLength)
+                output.push('');
         } else {
             output.push(str.slice(lastLastIndex));
         }
@@ -498,9 +498,9 @@ if (XRegExp) {
     // capture. Also allows adding new flags in the process of copying the regex
     function clone (regex, additionalFlags) {
         if (!XRegExp.isRegExp(regex))
-            throw TypeError("type RegExp expected");
+            throw TypeError('type RegExp expected');
         var x = regex._xregexp;
-        regex = XRegExp(regex.source, getNativeFlags(regex) + (additionalFlags || ""));
+        regex = XRegExp(regex.source, getNativeFlags(regex) + (additionalFlags || ''));
         if (x) {
             regex._xregexp = {
                 source: x.source,
@@ -511,11 +511,11 @@ if (XRegExp) {
     }
 
     function getNativeFlags (regex) {
-        return (regex.global     ? "g" : "") +
-            (regex.ignoreCase ? "i" : "") +
-            (regex.multiline  ? "m" : "") +
-            (regex.extended   ? "x" : "") + // Proposed for ES4; included in AS3
-            (regex.sticky     ? "y" : "");
+        return (regex.global     ? 'g' : '') +
+            (regex.ignoreCase ? 'i' : '') +
+            (regex.multiline  ? 'm' : '') +
+            (regex.extended   ? 'x' : '') + // Proposed for ES4; included in AS3
+            (regex.sticky     ? 'y' : '');
     }
 
     function runTokens (pattern, index, scope, context) {
@@ -570,7 +570,7 @@ if (XRegExp) {
         /\(\?#[^)]*\)/,
         function (match) {
             // Keep tokens separated unless the following token is a quantifier
-            return nativ.test.call(quantifier, match.input.slice(match.index + match[0].length)) ? "" : "(?:)";
+            return nativ.test.call(quantifier, match.input.slice(match.index + match[0].length)) ? '' : '(?:)';
         }
     );
 
@@ -580,7 +580,7 @@ if (XRegExp) {
         /\((?!\?)/,
         function () {
             this.captureNames.push(null);
-            return "(";
+            return '(';
         }
     );
 
@@ -590,7 +590,7 @@ if (XRegExp) {
         function (match) {
             this.captureNames.push(match[1]);
             this.hasNamedCapture = true;
-            return "(";
+            return '(';
         }
     );
 
@@ -602,7 +602,7 @@ if (XRegExp) {
             // Keep backreferences separate from subsequent literal numbers. Preserve back-
             // references to named groups that are undefined at this point as literal strings
             return index > -1 ?
-                "\\" + (index + 1) + (isNaN(match.input.charAt(match.index + match[0].length)) ? "" : "(?:)") :
+                '\\' + (index + 1) + (isNaN(match.input.charAt(match.index + match[0].length)) ? '' : '(?:)') :
                 match[0];
         }
     );
@@ -613,7 +613,7 @@ if (XRegExp) {
         function (match) {
             // For cross-browser compatibility with ES3, convert [] to \b\B and [^] to [\s\S].
             // (?!) should work like \b\B, but is unreliable in Firefox
-            return match[0] === "[]" ? "\\b\\B" : "[\\s\\S]";
+            return match[0] === '[]' ? '\\b\\B' : '[\\s\\S]';
         }
     );
 
@@ -623,7 +623,7 @@ if (XRegExp) {
         /^\(\?([imsx]+)\)/,
         function (match) {
             this.setFlag(match[1]);
-            return "";
+            return '';
         }
     );
 
@@ -632,18 +632,18 @@ if (XRegExp) {
         /(?:\s+|#.*)+/,
         function (match) {
             // Keep tokens separated unless the following token is a quantifier
-            return nativ.test.call(quantifier, match.input.slice(match.index + match[0].length)) ? "" : "(?:)";
+            return nativ.test.call(quantifier, match.input.slice(match.index + match[0].length)) ? '' : '(?:)';
         },
         XRegExp.OUTSIDE_CLASS,
-        function () {return this.hasFlag("x");}
+        function () {return this.hasFlag('x');}
     );
 
     // Dot, in dotall (aka singleline) mode only
     XRegExp.addToken(
         /\./,
-        function () {return "[\\s\\S]";},
+        function () {return '[\\s\\S]';},
         XRegExp.OUTSIDE_CLASS,
-        function () {return this.hasFlag("s");}
+        function () {return this.hasFlag('s');}
     );
 
 
@@ -771,7 +771,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             doubleQuotedString			: /"([^\\"\n]|\\.)*"/g,
             singleQuotedString			: /'([^\\'\n]|\\.)*'/g,
             multiLineDoubleQuotedString	: new XRegExp('"([^\\\\"]|\\\\.)*"', 'gs'),
-            multiLineSingleQuotedString	: new XRegExp("'([^\\\\']|\\\\.)*'", 'gs'),
+            multiLineSingleQuotedString	: new XRegExp('\'([^\\\\\']|\\\\.)*\'', 'gs'),
             xmlComments					: /(&lt;|<)!--[\s\S]*?--(&gt;|>)/gm,
             url							: /\w+:\/\/[\w-.\/?%&=:@;#]*/g,
 
@@ -1225,7 +1225,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
      */
     function toBoolean(value)
     {
-        var result = { "true" : true, "false" : false }[value];
+        var result = { 'true' : true, 'false' : false }[value];
         return result == null ? value : result;
     };
 
@@ -1391,17 +1391,17 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     {
         var match,
             result = {},
-            arrayRegex = new XRegExp("^\\[(?<values>(.*?))\\]$"),
+            arrayRegex = new XRegExp('^\\[(?<values>(.*?))\\]$'),
             regex = new XRegExp(
-                "(?<name>[\\w-]+)" +
-                    "\\s*:\\s*" +
-                    "(?<value>" +
-                    "[\\w-%#]+|" +		// word
-                    "\\[.*?\\]|" +		// [] array
+                '(?<name>[\\w-]+)' +
+                    '\\s*:\\s*' +
+                    '(?<value>' +
+                    '[\\w-%#]+|' +		// word
+                    '\\[.*?\\]|' +		// [] array
                     '".*?"|' +			// "" string
-                    "'.*?'" +			// '' string
-                    ")\\s*;?",
-                "g"
+                    '\'.*?\'' +			// '' string
+                    ')\\s*;?',
+                'g'
             )
             ;
 
@@ -1801,7 +1801,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         code = code.join('\r');
 
         // For Webkit browsers, replace nbsp with a breaking space
-        code = code.replace(/\u00a0/g, " ");
+        code = code.replace(/\u00a0/g, ' ');
 
         // inject <textarea/> tag
         textarea.appendChild(document.createTextNode(code));
@@ -1970,7 +1970,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             if (regexList != null)
                 for (var i = 0; i < regexList.length; i++)
                     // BUG: length returns len+1 for array if methods added to prototype chain (oising@gmail.com)
-                    if (typeof (regexList[i]) == "object")
+                    if (typeof (regexList[i]) == 'object')
                         result = result.concat(getMatches(code, regexList[i]));
 
             // sort and remove nested the matches
@@ -2359,16 +2359,16 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             var regex = { 'end' : regexGroup.right.source };
 
             if(regexGroup.eof)
-                regex.end = "(?:(?:" + regex.end + ")|$)";
+                regex.end = '(?:(?:' + regex.end + ')|$)';
 
             this.htmlScript = {
                 left : { regex: regexGroup.left, css: 'script' },
                 right : { regex: regexGroup.right, css: 'script' },
                 code : new XRegExp(
-                    "(?<left>" + regexGroup.left.source + ")" +
-                        "(?<code>.*?)" +
-                        "(?<right>" + regex.end + ")",
-                    "sgi"
+                    '(?<left>' + regexGroup.left.source + ')' +
+                        '(?<code>.*?)' +
+                        '(?<right>' + regex.end + ')',
+                    'sgi'
                 )
             };
         }
@@ -2709,7 +2709,7 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 
 		function fixComments(match, regexInfo)
 		{
-			var css = (match[0].indexOf("///") == 0)
+			var css = (match[0].indexOf('///') == 0)
 				? 'color1'
 				: 'comments'
 				;
@@ -2897,10 +2897,10 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			' module export import define';
 
 		this.regexList = [
-			{ regex: new RegExp("[A-Z][A-Za-z0-9_]+", 'g'), 			css: 'constants' },
-			{ regex: new RegExp("\\%.+", 'gm'), 						css: 'comments' },
-			{ regex: new RegExp("\\?[A-Za-z0-9_]+", 'g'), 				css: 'preprocessor' },
-			{ regex: new RegExp("[a-z0-9_]+:[a-z0-9_]+", 'g'), 			css: 'functions' },
+			{ regex: new RegExp('[A-Z][A-Za-z0-9_]+', 'g'), 			css: 'constants' },
+			{ regex: new RegExp('\\%.+', 'gm'), 						css: 'comments' },
+			{ regex: new RegExp('\\?[A-Za-z0-9_]+', 'g'), 				css: 'preprocessor' },
+			{ regex: new RegExp('[a-z0-9_]+:[a-z0-9_]+', 'g'), 			css: 'functions' },
 			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },
 			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },
 			{ regex: new RegExp(this.getKeywords(keywords),	'gm'),		css: 'keyword' }
@@ -3289,9 +3289,9 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			{ regex: /(&lt;|<)#[\s\S]*?#(&gt;|>)/gm,														css: 'comments here' },					// multi-line comments
 			
 			{ regex: new RegExp('@"\\n[\\s\\S]*?\\n"@', 'gm'),												css: 'script string here' },			// double quoted here-strings
-			{ regex: new RegExp("@'\\n[\\s\\S]*?\\n'@", 'gm'),												css: 'script string single here' },		// single quoted here-strings
+			{ regex: new RegExp('@\'\\n[\\s\\S]*?\\n\'@', 'gm'),												css: 'script string single here' },		// single quoted here-strings
 			{ regex: new RegExp('"(?:\\$\\([^\\)]*\\)|[^"]|`"|"")*[^`]"','g'),								css: 'string' },						// double quoted strings
-			{ regex: new RegExp("'(?:[^']|'')*'", 'g'),														css: 'string single' },					// single quoted strings
+			{ regex: new RegExp('\'(?:[^\']|\'\')*\'', 'g'),														css: 'string single' },					// single quoted strings
 			
 			{ regex: new RegExp('[\\$|@|@@](?:(?:global|script|private|env):)?[A-Z0-9_]+', 'gi'),			css: 'variable' },						// $variables
 			{ regex: new RegExp('(?:\\b'+verbs.replace(/ /g, '\\b|\\b')+')-[a-zA-Z_][a-zA-Z0-9_]*', 'gmi'),	css: 'functions' },						// functions and cmdlets

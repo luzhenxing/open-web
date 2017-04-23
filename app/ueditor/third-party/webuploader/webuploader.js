@@ -5579,7 +5579,7 @@
                     bytepos=7;
     
     
-                    this.encode.displayName = "_encode_";
+                    this.encode.displayName = '_encode_';
     
                     var imageData = image.data;
                     var width = image.width;

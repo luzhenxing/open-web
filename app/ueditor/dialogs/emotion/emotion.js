@@ -3,19 +3,19 @@ window.onload = function () {
         emotionLocalization:false
     });
 
-    emotion.SmileyPath = editor.options.emotionLocalization === true ? 'images/' : "http://img.baidu.com/hi/";
+    emotion.SmileyPath = editor.options.emotionLocalization === true ? 'images/' : 'http://img.baidu.com/hi/';
     emotion.SmileyBox = createTabList( emotion.tabNum );
     emotion.tabExist = createArr( emotion.tabNum );
 
     initImgName();
-    initEvtHandler( "tabHeads" );
+    initEvtHandler( 'tabHeads' );
 };
 
 function initImgName() {
     for ( var pro in emotion.SmilmgName ) {
         var tempName = emotion.SmilmgName[pro],
                 tempBox = emotion.SmileyBox[pro],
-                tempStr = "";
+                tempStr = '';
 
         if ( tempBox.length ) return;
         for ( var i = 1; i <= tempName[1]; i++ ) {
@@ -32,7 +32,7 @@ function initEvtHandler( conId ) {
     for ( var i = 0, j = 0; i < tabHeads.childNodes.length; i++ ) {
         var tabObj = tabHeads.childNodes[i];
         if ( tabObj.nodeType == 1 ) {
-            domUtils.on( tabObj, "click", (function ( index ) {
+            domUtils.on( tabObj, 'click', (function ( index ) {
                 return function () {
                     switchTab( index );
                 };
@@ -41,12 +41,12 @@ function initEvtHandler( conId ) {
         }
     }
     switchTab( 0 );
-    $G( "tabIconReview" ).style.display = 'none';
+    $G( 'tabIconReview' ).style.display = 'none';
 }
 
 function InsertSmiley( url, evt ) {
     var obj = {
-        src:editor.options.emotionLocalization ? editor.options.UEDITOR_HOME_URL + "dialogs/emotion/" + url : url
+        src:editor.options.emotionLocalization ? editor.options.UEDITOR_HOME_URL + 'dialogs/emotion/' + url : url
     };
     obj._src = obj.src;
     editor.execCommand( 'insertimage', obj );
@@ -63,50 +63,50 @@ function switchTab( index ) {
         createTab( 'tab' + index );
     }
     //获取呈现元素句柄数组
-    var tabHeads = $G( "tabHeads" ).getElementsByTagName( "span" ),
-            tabBodys = $G( "tabBodys" ).getElementsByTagName( "div" ),
+    var tabHeads = $G( 'tabHeads' ).getElementsByTagName( 'span' ),
+            tabBodys = $G( 'tabBodys' ).getElementsByTagName( 'div' ),
             i = 0, L = tabHeads.length;
     //隐藏所有呈现元素
     for ( ; i < L; i++ ) {
-        tabHeads[i].className = "";
-        tabBodys[i].style.display = "none";
+        tabHeads[i].className = '';
+        tabBodys[i].style.display = 'none';
     }
     //显示对应呈现元素
-    tabHeads[index].className = "focus";
-    tabBodys[index].style.display = "block";
+    tabHeads[index].className = 'focus';
+    tabBodys[index].style.display = 'block';
 }
 
 function autoHeight( index ) {
-    var iframe = dialog.getDom( "iframe" ),
+    var iframe = dialog.getDom( 'iframe' ),
             parent = iframe.parentNode.parentNode;
     switch ( index ) {
         case 0:
-            iframe.style.height = "380px";
-            parent.style.height = "392px";
+            iframe.style.height = '380px';
+            parent.style.height = '392px';
             break;
         case 1:
-            iframe.style.height = "220px";
-            parent.style.height = "232px";
+            iframe.style.height = '220px';
+            parent.style.height = '232px';
             break;
         case 2:
-            iframe.style.height = "260px";
-            parent.style.height = "272px";
+            iframe.style.height = '260px';
+            parent.style.height = '272px';
             break;
         case 3:
-            iframe.style.height = "300px";
-            parent.style.height = "312px";
+            iframe.style.height = '300px';
+            parent.style.height = '312px';
             break;
         case 4:
-            iframe.style.height = "140px";
-            parent.style.height = "152px";
+            iframe.style.height = '140px';
+            parent.style.height = '152px';
             break;
         case 5:
-            iframe.style.height = "260px";
-            parent.style.height = "272px";
+            iframe.style.height = '260px';
+            parent.style.height = '272px';
             break;
         case 6:
-            iframe.style.height = "230px";
-            parent.style.height = "242px";
+            iframe.style.height = '230px';
+            parent.style.height = '242px';
             break;
         default:
 
@@ -115,7 +115,7 @@ function autoHeight( index ) {
 
 
 function createTab( tabName ) {
-    var faceVersion = "?v=1.1", //版本号
+    var faceVersion = '?v=1.1', //版本号
             tab = $G( tabName ), //获取将要生成的Div句柄
             imagePath = emotion.SmileyPath + emotion.imageFolders[tabName], //获取显示表情和预览表情的路径
             positionLine = 11 / 2, //中间数
@@ -138,7 +138,7 @@ function createTab( tabName ) {
                 offset = cssOffset * i * (-1) - 1;
                 infor = emotion.SmileyInfor[tabName][i];
 
-                textHTML.push( '<td  class="' + tableCss + '"   border="1" width="' + iColWidth + '%" style="border-collapse:collapse;" align="center"  bgcolor="transparent" onclick="InsertSmiley(\'' + realUrl.replace( /'/g, "\\'" ) + '\',event)" onmouseover="over(this,\'' + sUrl + '\',\'' + posflag + '\')" onmouseout="out(this)">' );
+                textHTML.push( '<td  class="' + tableCss + '"   border="1" width="' + iColWidth + '%" style="border-collapse:collapse;" align="center"  bgcolor="transparent" onclick="InsertSmiley(\'' + realUrl.replace( /'/g, '\\\'' ) + '\',event)" onmouseover="over(this,\'' + sUrl + '\',\'' + posflag + '\')" onmouseout="out(this)">' );
                 textHTML.push( '<span>' );
                 textHTML.push( '<img  style="background-position:left ' + offset + 'px;" title="' + infor + '" src="' + emotion.SmileyPath + (editor.options.emotionLocalization ? '0.gif" width="' : 'default/0.gif" width="') + iWidth + '" height="' + iHeight + '"></img>' );
                 textHTML.push( '</span>' );
@@ -150,28 +150,28 @@ function createTab( tabName ) {
         textHTML.push( '</tr>' );
     }
     textHTML.push( '</table>' );
-    textHTML = textHTML.join( "" );
+    textHTML = textHTML.join( '' );
     tab.innerHTML = textHTML;
 }
 
 function over( td, srcPath, posFlag ) {
-    td.style.backgroundColor = "#ACCD3C";
-    $G( 'faceReview' ).style.backgroundImage = "url(" + srcPath + ")";
-    if ( posFlag == 1 ) $G( "tabIconReview" ).className = "show";
-    $G( "tabIconReview" ).style.display = 'block';
+    td.style.backgroundColor = '#ACCD3C';
+    $G( 'faceReview' ).style.backgroundImage = 'url(' + srcPath + ')';
+    if ( posFlag == 1 ) $G( 'tabIconReview' ).className = 'show';
+    $G( 'tabIconReview' ).style.display = 'block';
 }
 
 function out( td ) {
-    td.style.backgroundColor = "transparent";
-    var tabIconRevew = $G( "tabIconReview" );
-    tabIconRevew.className = "";
+    td.style.backgroundColor = 'transparent';
+    var tabIconRevew = $G( 'tabIconReview' );
+    tabIconRevew.className = '';
     tabIconRevew.style.display = 'none';
 }
 
 function createTabList( tabNum ) {
     var obj = {};
     for ( var i = 0; i < tabNum; i++ ) {
-        obj["tab" + i] = [];
+        obj['tab' + i] = [];
     }
     return obj;
 }
