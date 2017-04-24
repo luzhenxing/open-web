@@ -58,6 +58,7 @@
     </div>
     <div id="editor_iframe_holder" class="item-editor-iframe-holder"></div>
   </div>
+  <div id="editor" style="margin-top: 10px;"></div>
 </div>
 
 <div class="item-ueditor-layer">
@@ -149,7 +150,11 @@
 <script>
   var $ueditor = $('#ueditor')
   var ue = UE.getEditor('editor_iframe_holder', {
+      toolbars:[]
     //    initialFrameHeight:300
+  })
+  UE.getEditor('editor', {
+    initialFrameHeight: 300
   })
   //  ue.addListener('ready', function () {
   //    $('#ueditor').show()
