@@ -21,3 +21,53 @@ for i in 0 .. 10
 for size in 6 .. 18
   .fz{size * 2}
     font-size: size * 2px !important
+
+.loading
+  padding: 10px
+  text-align: center
+  img
+    vertical-align: top
+    width: 30px
+    height: 30px
+
+/* animated */
+.animated {
+  animation-duration: .5s;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+  animation-duration: 2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+}
