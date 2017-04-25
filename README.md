@@ -14,6 +14,9 @@
 **需要nodejs v4+**
 
 ```bash
+# 全局安装bower
+npm install bower -g
+
 # github中下载项目
 git clone git@github.com:luzhenxing/open-web.git 
 
