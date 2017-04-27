@@ -118,10 +118,16 @@ define(['scripts/UEditor'], (UEditor) => {
       }
     },
     importItem(){
-      $.getJSON('json/item-list.json').then(result => {
-        console.log(result.data)
-        this.renderItems(result.data)
+      var id = 857414922369949700
+      // $.getJSON('json/item-list.json').then(result => {
+      $.getJSON(`http://192.168.1.175:8080/api/v1/projects/${id}/paragraphs/`,{
+        page: 5,
+        perPageNo: 20
+      }).then(result => {
+        console.log(result.datas)
+        this.renderItems(result.datas.sliceList)
       })
+
     },
     renderItems(data){
       let tpl = ''
