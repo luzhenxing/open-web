@@ -22,6 +22,17 @@ for size in 6 .. 18
   .fz{size * 2}
     font-size: size * 2px !important
 
+
+clearfix()
+  zoom: 1
+  &:after
+    content: ''
+    display: block
+    padding: 0
+    margin: 0
+    height: 0
+    clear: both
+
 .loading
   padding: 10px
   text-align: center

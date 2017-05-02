@@ -1,7 +1,7 @@
 // 行业分类联动
 define(['scripts/fetch'], (fetch) => {
-  const $cate1 = $('#category1'),
-    $cate2 = $('#category2')
+  const $cate1 = $('#firstClassId'),
+    $cate2 = $('#secondClassId')
 
   const renderCategory = ($cate, fetch_type, key) => {
     return fetch[fetch_type](key).then(data => {

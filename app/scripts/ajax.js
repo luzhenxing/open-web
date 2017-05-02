@@ -1,28 +1,31 @@
 define(() => {
   return {
-    getData(url, data = {}) {
+    ajaxData(url, data = {}, type = 'GET'){
       const promise = $.Deferred()
-      $.getJSON(url, $.extend(data, {timer: Date.now()}), result => {
-        if (result.error_code === 0){
-          promise.resolve(result.data);
-        } else {
-          throw new Error('ajax get fail');
-          promise.reject(result);
+      $.ajax({
+        url,
+        data,
+        type,
+        dataType: 'json',
+        success(result) {
+          if (result.code === '000000') {
+            promise.resolve(result.datas)
+          } else {
+            throw new Error(result.message)
+            promise.reject(result)
+          }
         }
       })
-      return promise;
+      return promise
     },
-    postData(url, data={}) {
-      const promise = $.Deferred()
-      $.post(url, data, result => {
-        if (result.error_code === 0){
-          promise.resolve(result.data);
-        } else {
-          throw new Error('ajax post fail');
-          promise.reject(result);
-        }
-      }, 'json')
-      return promise;
+    getData(url, data = {}) {
+      return this.ajaxData(url, data, 'GET')
+    },
+    postData(url, data = {}) {
+      return this.ajaxData(url, data, 'POST')
+    },
+    putData(url, data = {}) {
+      return this.ajaxData(url, data, 'PUT')
     }
   }
 })

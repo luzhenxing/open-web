@@ -30,7 +30,8 @@ define(() => {
       })
       this.bindEvent()
       console.log(this.ueditor)
-      this.show();
+      this.show()
+
     },
     // 绑定事件
     bindEvent(){
@@ -38,39 +39,39 @@ define(() => {
       this.wrap.on('click', '.hook-ueditor-save', () => {
         if (this.isContentEmpty()) {
           this.wrap.find('.hook-ueditor-save').prop('disabled', true)
-          return;
+          return
         }
-        this.box.data('type', 'edit');
+        this.box.data('type', 'edit')
         this.inner.html(_this.getContent())
         this.hide()
         $(this).trigger('save')
       })
         .on('click', '.hook-ueditor-cancel', () => {
-          this.hide();
-          if (this.box.data('type') === 'create'){
+          this.hide()
+          if (this.box.data('type') === 'create') {
             // 如果创建时取消则销毁段落
-            this.box.remove();
+            this.box.remove()
             $(this).trigger('destroy')
           }
         })
 
-
-
-      this.ueditor.addListener('contentChange', () => {
-        this.wrap.find('.hook-ueditor-save').prop('disabled', this.isContentEmpty())
+      this.ueditor.addListener('contentchange', () => {
+        this.wrap.find('.hook-ueditor-save')
+          .prop('disabled', this.isContentEmpty())
       })
     },
     // 显示编辑器
     show(){
-      $('.item-button-group .btn').prop('disabled', true);
+      $('.item-button-group .btn').prop('disabled', true)
       this.wrap.show()
       this.inner.hide()
     },
     // 隐藏编辑器
     hide(){
-      $('.item-button-group .btn').prop('disabled', false);
+      $('.item-button-group .btn').prop('disabled', false)
       this.wrap.hide()
       this.inner.show()
+      $(this).trigger('hide')
     },
     // 保存内容
     save(){},

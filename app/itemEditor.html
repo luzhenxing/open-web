@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="renderer" content="webkit">
-  <title>开源社会网 - UEditor</title>
+  <title>开源社会网 - editor</title>
 
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
@@ -16,32 +16,34 @@
   <!-- endbuild -->
 
   <!-- build:css styles/style.css -->
-  <link rel="stylesheet" href="styles/item-ueditor.css">
+  <link rel="stylesheet" href="styles/item-editor.css">
   <!-- endbuild -->
+
+  <script>
+    window.PID = 111111112222
+  </script>
 </head>
 <body>
-<button id="show-ueditor" type="button" class="btn btn-default">编辑器</button>
-<div class="container">
-  <div id="editor" style="margin-top: 10px;"></div>
-</div>
+<button id="show-editor" type="button" class="btn btn-default">编辑段落</button>
 <!-- template -->
 <!-- 创建项目弹层 -->
-<script id="tpl-item-ueditor-layer" type="text/html">
-  <div id="item-ueditor-layer" class="item-ueditor-layer animated">
+<script id="tpl-item-editor-layer" type="text/html">
+  <div id="item-editor-layer" class="item-editor-layer animated">
     <div class="item-button-group text-center">
-      <button id="ueditor-btn-add" type="button" class="btn btn-sm btn-default">
+      <button id="editor-btn-add" type="button" class="btn btn-sm btn-default">
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         添加段
       </button>
-      <button id="ueditor-btn-delete" type="button" class="btn btn-sm btn-default">
+      <button id="editor-btn-delete" type="button" class="btn btn-sm btn-default">
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         删除段
       </button>
-      <button id="ueditor-btn-coalesce" type="button" class="btn btn-sm btn-default">
+      <button id="editor-btn-coalesce" type="button" class="btn btn-sm btn-default">
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         合并
       </button>
-      <button id="ueditor-btn-import" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom"
+      <button id="editor-btn-import" type="button" class="btn btn-sm btn-default" data-toggle="tooltip"
+              data-placement="bottom"
               title="支持Word文件">
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         导入
@@ -51,15 +53,22 @@
       <div class="panel u-panel-style">
         <div class="panel-body item-list-wrapper">
           <ul class="item-list">
+            <li>
+              <div class="item-content">
+                <div class="item-editor-wrap">
+                </div>
+                <div class="item-inner"></div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
       <div class="u-btn-group text-center">
-        <button id="ueditor-btn-cancel" type="button" class="btn btn-default">取消</button>
-        <button id="ueditor-btn-save" type="button" class="btn btn-default">暂存</button>
-        <button id="ueditor-btn-prev" type="button" class="btn btn-default">上一步</button>
-        <button id="ueditor-btn-review" type="button" class="btn btn-default">预览</button>
-        <button id="ueditor-btn-submit" type="button" class="btn btn-success">提交</button>
+        <button id="editor-btn-cancel" type="button" class="btn btn-default">取消</button>
+        <button id="editor-btn-save" type="button" class="btn btn-default">暂存</button>
+        <button id="editor-btn-prev" type="button" class="btn btn-default">上一步</button>
+        <button id="editor-btn-review" type="button" class="btn btn-default">预览</button>
+        <button id="editor-btn-submit" type="button" class="btn btn-success">提交</button>
       </div>
     </div>
   </div>
@@ -67,9 +76,10 @@
 
 <script id="tpl-item-list" type="text/html">
   <li id="item_{{id}}" data-id="{{id}}" data-type="{{type}}" data-proid="{{proId}}">
-    <label class="checkbox" for="checkbox_{{id}}"><input class="hook-item-checkbox" id="checkbox_{{id}}" type="checkbox"></label>
+    <label class="checkbox" for="checkbox_{{id}}"><input class="hook-item-checkbox" id="checkbox_{{id}}"
+                                                         type="checkbox"></label>
     <div class="item-content">
-      <div class="item-ueditor-wrap">
+      <div class="item-editor-wrap">
       </div>
       <div class="item-inner">{{#content}}</div>
     </div>
@@ -82,22 +92,23 @@
 <script src="/bower_components/modernizr/modernizr.js"></script>
 <script src="/bower_components/art-template/lib/template-web.js"></script>
 <script src="/bower_components/requirejs/require.js"></script>
+<script src="scripts/require.config.js"></script>
 <script src="scripts/ueditor.config.js"></script>
 <script src="/ueditor/ueditor.all.js"></script>
 <!-- endbuild -->
 
-<script>
-  let ue = UE.getEditor('editor', {
-    initialFrameHeight: 100
-  })
-  ue.addListener('ready', function() {
-    ue.setHide();
-  })
+<!-- build:js scripts/plugins.js -->
+<script src="/bower_components/bootstrap/js/tooltip.js"></script>
+<!-- endbuild -->
 
-  requirejs(['scripts/item-ueditor'], (ItemUeditor) => {
-    $('#show-ueditor').on('click', function () {
-      ItemUeditor.show()
+<script>
+  requirejs(['scripts/editor/ItemEditor'], ItemEditor => {
+    $('#show-editor').on('click', () => {
+      itemEditor.show()
     })
+
+    let itemEditor = new ItemEditor()
+    itemEditor.show()
   })
 </script>
 </body>

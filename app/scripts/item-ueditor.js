@@ -1,7 +1,8 @@
 define(['scripts/UEditor'], (UEditor) => {
   // 当前段落id集合
-  let itemIds = {}
-  let checkedItem = {}
+  let itemIds = {},
+    checkedItem = {},
+    editorShow = false
 
   function ItemUeditor() {
     this.$layer = null
@@ -38,6 +39,10 @@ define(['scripts/UEditor'], (UEditor) => {
         })
         // 点击内容显示编辑器
         .on('click', '.item-inner', function () {
+          if (editorShow) {
+            return
+          }
+          editorShow = true
           let $obj = $(this).closest('li'),
             editor = $obj.data('editor')
           if (editor === undefined) {
@@ -46,6 +51,9 @@ define(['scripts/UEditor'], (UEditor) => {
             $(editor).on('destroy', () => {
               $obj.data('editor', undefined)
             })
+              // .on('hide', () => {
+              //   editorShow = false
+              // })
           } else {
             editor.setContent($(this).html())
             editor.show()
@@ -119,12 +127,12 @@ define(['scripts/UEditor'], (UEditor) => {
     },
     importItem(){
       var id = 857414922369949700
-      // $.getJSON('json/item-list.json').then(result => {
-      $.getJSON(`http://192.168.1.175:8080/api/v1/projects/${id}/paragraphs/`,{
-        page: 5,
-        perPageNo: 20
-      }).then(result => {
-        console.log(result.datas)
+      $.getJSON('json/item-list.json').then(result => {
+        // $.getJSON(`http://192.168.1.175:8080/api/v1/projects/${id}/paragraphs/`,{
+        //   page: 5,
+        //   perPageNo: 20
+        // }).then(result => {
+        console.log(result)
         this.renderItems(result.datas.sliceList)
       })
 
@@ -148,7 +156,8 @@ define(['scripts/UEditor'], (UEditor) => {
       itemUeditor.show()
       switch (command) {
         case 'create':
-          itemUeditor.createItem()
+          itemUeditor.addItem()
+
           break
       }
     },
